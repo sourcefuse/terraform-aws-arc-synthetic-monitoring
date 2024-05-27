@@ -1,4 +1,10 @@
-# terraform-aws-arc-synthetic-monitoring
+# [terraform-aws-arc-synthetic-monitoring](https://github.com/sourcefuse/terraform-aws-arc-synthetic-monitoring)
+
+<a href="https://github.com/sourcefuse/terraform-aws-arc-synthetic-monitoring/releases/latest"><img src="https://img.shields.io/github/release/sourcefuse/terraform-aws-arc-synthetic-monitoring.svg?style=for-the-badge" alt="Latest Release"/></a> <a href="https://github.com/sourcefuse/terraform-aws-arc-synthetic-monitoring/commits"><img src="https://img.shields.io/github/last-commit/sourcefuse/terraform-aws-arc-synthetic-monitoring.svg?style=for-the-badge" alt="Last Updated"/></a> ![Terraform](https://img.shields.io/badge/terraform-%235835CC.svg?style=for-the-badge&logo=terraform&logoColor=white) ![GitHub Actions](https://img.shields.io/badge/github%20actions-%232671E5.svg?style=for-the-badge&logo=githubactions&logoColor=white)
+
+[![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=sourcefuse_terraform-aws-arc-synthetic-monitoring&token=86c4365844146b19d7ee637439416373f834e97a)](https://sonarcloud.io/summary/new_code?id=sourcefuse_terraform-aws-arc-synthetic-monitoring)
+
+[![snyk](https://github.com/sourcefuse/terraform-aws-arc-synthetic-monitoring/actions/workflows/snyk.yaml/badge.svg)](https://github.com/sourcefuse/terraform-aws-arc-synthetic-monitoring/actions/workflows/snyk.yaml)
 
 ## Overview
 
@@ -15,8 +21,14 @@ SourceFuse AWS Reference Architecture (ARC) Terraform module for managing synthe
 To see a full example, check out the [main.tf](./example/main.tf) file in the example folder.  
 
 ```hcl
-module "this" {
-  source = "git::https://github.com/sourcefuse/terraform-aws-refarch-<module_name>"
+module "synthetic-monitoring" {
+  source            = "../"
+  sns_topic_name    = var.sns_topic_name
+  endpoint          = var.endpoint
+  kms_key_alias     = var.kms_key_alias
+  canaries_with_vpc = local.canaries_with_vpc
+  bucket_name       = var.bucket_name
+  tags              = module.tags.tags
 }
 ```
 

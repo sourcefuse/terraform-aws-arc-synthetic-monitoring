@@ -1,17 +1,21 @@
-################################################################################
-## defaults
-################################################################################
-terraform {
-  required_version = "~> 1.3, < 2.0.0"
+module "tags" {
+  source  = "sourcefuse/arc-tags/aws"
+  version = "1.2.3"
 
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 4.0"
-    }
+  environment = var.environment
+  project     = var.project_name
+
+  extra_tags = {
+    MonoRepo     = "True"
+    MonoRepoPath = "terraform/synthetics"
   }
 }
-
-provider "aws" {
-  region = var.region
+module "synthetic-monitoring" {
+  source            = "../"
+  sns_topic_name    = var.sns_topic_name
+  endpoint          = var.endpoint
+  kms_key_alias     = var.kms_key_alias
+  canaries_with_vpc = local.canaries_with_vpc
+  bucket_name       = var.bucket_name
+  tags              = module.tags.tags
 }

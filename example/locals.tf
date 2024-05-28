@@ -20,7 +20,7 @@ locals {
     {
       name = "sourcefuse-canary"
       environment_variables = {
-        "URL" = "www.sourcefuse.com"
+        "URL" = "https://www.sourcefuse.com/"
       }
     }
   ]

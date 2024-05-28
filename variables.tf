@@ -1,15 +1,3 @@
-# variable "use_default_role" {
-#   description = "Whether to use the default IAM role for canary execution. If true, it will use the default role. If false, users need to provide their own role ARN."
-#   type        = bool
-#   default     = true
-# }
-
-# variable "execution_role_arn" {
-#   description = "The ARN of the IAM role for the canary execution. This is used if use_default_role is set to false."
-#   type        = string
-#   default     = ""
-# }
-
 variable "region" {
   type        = string
   default     = "us-east-1"
@@ -36,11 +24,6 @@ variable "endpoint" {
   description = "The endpoint for the SNS subscription."
   type        = string
 }
-# variable "iam_policy_name" {
-#   type        = string
-#   default     = "canary_execution_policy"
-#   description = "The name of the IAM policy for executing canaries."
-# }
 
 ///////// KMS //////////////////
 
@@ -55,11 +38,6 @@ variable "enable_key_rotation" {
   default     = true
   description = "Specifies whether key rotation is enabled"
 }
-
-# variable "alias" {
-#   type        = string
-#   description = "The display name of the alias. The name must start with the word `alias` followed by a forward slash. If not specified, the alias name will be auto-generated."
-# }
 
 variable "custom_kms_policy" {
   description = "Custom KMS policy to apply if enabled. If not provided, a default policy will be used."
@@ -95,60 +73,60 @@ variable "tags" {
 ## S3
 ################################################################################
 
-variable "allow_encrypted_uploads_only" {
-  type        = bool
-  default     = false
-  description = "Set to `true` to prevent uploads of unencrypted objects to S3 bucket"
-}
+# variable "allow_encrypted_uploads_only" {
+#   type        = bool
+#   default     = false
+#   description = "Set to `true` to prevent uploads of unencrypted objects to S3 bucket"
+# }
 
-variable "user_enabled" {
-  type        = bool
-  default     = false
-  description = "Set to `true` to create an IAM user with permission to access the bucket"
-}
 variable "bucket_name" {
   type        = string
-  description = ""
+  description = "The name of the S3 bucket."
 }
 variable "bucket_key_enabled" {
   type        = bool
-  description = ""
+  description = "Specifies whether bucket key is enabled."
   default     = false
 }
 variable "allowed_bucket_actions" {
   type        = list(string)
-  default     = []
-  description = ""
+  default     = ["s3:GetObject", "s3:PutObject"]
+  description = "List of actions allowed on the bucket, e.g., ['s3:GetObject', 's3:PutObject']."
 }
-variable "acl" {
-  type        = string
-  default     = "private"
-  description = ""
-}
+# variable "acl" {
+#   type        = string
+#   default     = "private"
+#   description = "The ACL to apply to the bucket. Default is 'private'."
+# }
 variable "force_destroy" {
   type        = bool
   default     = true
-  description = ""
+  description = "Specifies whether to force destroy the bucket (and all objects) when the bucket is removed."
 }
 variable "versioning_enabled" {
   type        = bool
   default     = false
-  description = ""
+  description = "Enable versioning for the S3 bucket."
 }
 variable "block_public_acls" {
   type        = bool
   default     = false
-  description = ""
+  description = "Whether Amazon S3 should block public ACLs for this bucket."
+}
+variable "ignore_public_acls" {
+  type        = bool
+  default     = true
+  description = "Whether Amazon S3 should ignore public ACLs for this bucket."
 }
 variable "block_public_policy" {
   type        = bool
   default     = false
-  description = ""
+  description = "Whether Amazon S3 should block public bucket policies for this bucket."
 }
 variable "restrict_public_buckets" {
   type        = bool
   default     = false
-  description = ""
+  description = "Whether Amazon S3 should restrict public bucket policies for this bucket."
 }
 variable "cors_configuration" {
   type = list(object({
@@ -158,56 +136,17 @@ variable "cors_configuration" {
     expose_headers  = list(string)
     max_age_seconds = number
   }))
-  default     = []
-  description = ""
-}
-variable "lifecycle_configuration_rules" {
-  type = list(object({
-    abort_incomplete_multipart_upload_days = number
-    enabled                                = bool
-    expiration = object({
-      days                         = number
-      expired_object_delete_marker = bool
-    })
-    filter_and = object({})
-    id         = string
-    noncurrent_version_expiration = object({
-      newer_noncurrent_versions = number
-      noncurrent_days           = number
-    })
-    noncurrent_version_transition = list(object({}))
-    transition = list(object({
-      days          = number
-      storage_class = string
-    }))
-  }))
-  default = [{
-
-
-    abort_incomplete_multipart_upload_days = 1
-    enabled                                = true
-    expiration = {
-      days                         = null
-      expired_object_delete_marker = null
+  default = [
+    {
+      allowed_headers = ["Authorization"]
+      allowed_methods = ["GET", "POST"]
+      allowed_origins = ["*"]
+      expose_headers  = ["x-amz-server-side-encryption"]
+      max_age_seconds = 3000
     }
-
-    # filter
-    filter_and = {}
-    id         = "delete after 365 days"
-    noncurrent_version_expiration = {
-      newer_noncurrent_versions = 1
-      noncurrent_days           = 1
-    }
-    noncurrent_version_transition = []
-    transition                    = []
-
-  }]
+  ]
+  description = "The CORS configuration for the S3 bucket."
 }
-variable "access_key_enabled" {
-  type    = bool
-  default = true
-}
-
 variable "sse_algorithm" {
   type        = string
   default     = "aws:kms"

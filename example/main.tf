@@ -13,6 +13,7 @@ module "tags" {
 module "synthetic-monitoring" {
   source            = "../"
   sns_topic_name    = var.sns_topic_name
+  protocol          = var.protocol
   endpoint          = var.endpoint
   kms_key_alias     = var.kms_key_alias
   canaries_with_vpc = local.canaries_with_vpc

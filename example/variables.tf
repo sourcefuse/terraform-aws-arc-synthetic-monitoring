@@ -19,21 +19,26 @@ variable "environment" {
 
 variable "bucket_name" {
   type        = string
-  default     = ""
-  description = ""
+  default     = "arc-synthetics-poc-three"
+  description = "Name of the Bucket"
 }
 variable "sns_topic_name" {
   type        = string
-  default     = ""
-  description = ""
+  default     = "arc-synthetics"
+  description = "Name for the SNS topic."
 }
 variable "endpoint" {
   type        = string
-  default     = ""
-  description = ""
+  default     = "mayank2299@gmail.com"
+  description = "endpoint for the notifications"
+}
+variable "protocol" {
+  description = "The protocol for the SNS subscription endpoint.it can be http or https or lambda or sqs etc"
+  type        = string
+  default     = "email"
 }
 variable "kms_key_alias" {
   type        = string
-  default     = ""
-  description = ""
+  default     = "alias/arc-synthetics"
+  description = "Alias for the custom KMS key (if enabled)."
 }

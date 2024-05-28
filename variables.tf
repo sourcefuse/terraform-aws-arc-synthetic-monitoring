@@ -110,7 +110,7 @@ variable "versioning_enabled" {
 }
 variable "block_public_acls" {
   type        = bool
-  default     = false
+  default     = true
   description = "Whether Amazon S3 should block public ACLs for this bucket."
 }
 variable "ignore_public_acls" {
@@ -120,12 +120,12 @@ variable "ignore_public_acls" {
 }
 variable "block_public_policy" {
   type        = bool
-  default     = false
+  default     = true
   description = "Whether Amazon S3 should block public bucket policies for this bucket."
 }
 variable "restrict_public_buckets" {
   type        = bool
-  default     = false
+  default     = true
   description = "Whether Amazon S3 should restrict public bucket policies for this bucket."
 }
 variable "cors_configuration" {

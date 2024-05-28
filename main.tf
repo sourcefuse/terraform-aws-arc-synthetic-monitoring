@@ -61,19 +61,19 @@ module "kms" {
 
 /////////////////--SNS----//////////////////////////////
 
-resource "aws_sns_topic" "alarm" {
+resource "aws_sns_topic" "this" {
   name              = var.sns_topic_name
   kms_master_key_id = var.enabled ? module.kms.key_arn : null
   tags              = var.tags
 }
 
-resource "aws_sns_topic_policy" "my_sns_topic_policy" {
-  arn    = aws_sns_topic.alarm.arn
+resource "aws_sns_topic_policy" "this" {
+  arn    = aws_sns_topic.this.arn
   policy = data.aws_iam_policy_document.sns_topic_policy.json
 }
 
-resource "aws_sns_topic_subscription" "my_subscription" {
-  topic_arn = aws_sns_topic.alarm.arn
+resource "aws_sns_topic_subscription" "this" {
+  topic_arn = aws_sns_topic.this.arn
   protocol  = var.protocol
   endpoint  = var.endpoint
 }
@@ -125,7 +125,7 @@ resource "aws_cloudwatch_metric_alarm" "canary_in_vpc_alarms" {
     CanaryName = each.value.name
   }
 
-  alarm_actions     = [aws_sns_topic.alarm.arn]
+  alarm_actions     = [aws_sns_topic.this.arn]
   alarm_description = "Canary is down: ${each.value.name}"
   tags              = var.tags
 }

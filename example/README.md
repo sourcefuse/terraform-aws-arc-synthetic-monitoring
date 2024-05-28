@@ -20,7 +20,7 @@
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_synthetic-monitoring"></a> [synthetic-monitoring](#module\_synthetic-monitoring) | ../ | n/a |
+| <a name="module_synthetic-monitoring"></a> [synthetic-monitoring](#module\_synthetic-monitoring) | sourcefuse/arc-synthetic-monitoring/aws | 0.0.1 |
 | <a name="module_tags"></a> [tags](#module\_tags) | sourcefuse/arc-tags/aws | 1.2.3 |
 
 ## Resources

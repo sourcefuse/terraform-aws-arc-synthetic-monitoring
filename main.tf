@@ -137,21 +137,7 @@ resource "aws_s3_bucket" "artifcats_bucket" {
   force_destroy = var.force_destroy
   tags          = var.tags
 }
-resource "aws_s3_bucket_policy" "bucket_policy" {
-  bucket = aws_s3_bucket.artifcats_bucket.id
 
-  policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Effect    = "Allow"
-        Action    = var.allowed_bucket_actions
-        Resource  = "${aws_s3_bucket.artifcats_bucket.arn}/*"
-        Principal = "*"
-      }
-    ]
-  })
-}
 resource "aws_s3_bucket_public_access_block" "public_access_block" {
   bucket = aws_s3_bucket.artifcats_bucket.id
 

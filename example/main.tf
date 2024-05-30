@@ -12,7 +12,7 @@ module "tags" {
 }
 module "synthetic-monitoring" {
   source            = "sourcefuse/arc-synthetic-monitoring/aws"
-  version           = "0.0.1"
+  version           = "0.0.4"
   sns_topic_name    = var.sns_topic_name
   protocol          = var.protocol
   endpoint          = var.endpoint

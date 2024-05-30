@@ -20,7 +20,7 @@
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_synthetic-monitoring"></a> [synthetic-monitoring](#module\_synthetic-monitoring) | sourcefuse/arc-synthetic-monitoring/aws | 0.0.1 |
+| <a name="module_synthetic-monitoring"></a> [synthetic-monitoring](#module\_synthetic-monitoring) | sourcefuse/arc-synthetic-monitoring/aws | 0.0.4 |
 | <a name="module_tags"></a> [tags](#module\_tags) | sourcefuse/arc-tags/aws | 1.2.3 |
 
 ## Resources
@@ -34,7 +34,7 @@
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_bucket_name"></a> [bucket\_name](#input\_bucket\_name) | Name of the Bucket | `string` | `"arc-synthetics-poc-three"` | no |
-| <a name="input_endpoint"></a> [endpoint](#input\_endpoint) | endpoint for the notifications | `string` | `"mayank2299@gmail.com"` | no |
+| <a name="input_endpoint"></a> [endpoint](#input\_endpoint) | endpoint for the notifications | `string` | n/a | yes |
 | <a name="input_environment"></a> [environment](#input\_environment) | ID element. Usually used for region e.g. 'uw2', 'us-west-2', OR role 'prod', 'staging', 'dev', 'UAT' | `string` | `"poc"` | no |
 | <a name="input_kms_key_alias"></a> [kms\_key\_alias](#input\_kms\_key\_alias) | Alias for the custom KMS key (if enabled). | `string` | `"alias/arc-synthetics"` | no |
 | <a name="input_project_name"></a> [project\_name](#input\_project\_name) | Name of the project. | `string` | `"arc"` | no |

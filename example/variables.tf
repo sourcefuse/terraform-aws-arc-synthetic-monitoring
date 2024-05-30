@@ -29,7 +29,6 @@ variable "sns_topic_name" {
 }
 variable "endpoint" {
   type        = string
-  default     = "mayank2299@gmail.com"
   description = "endpoint for the notifications"
 }
 variable "protocol" {

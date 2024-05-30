@@ -108,7 +108,7 @@ resource "aws_synthetics_canary" "dynamic_canaries_with_vpc" {
   tags       = var.tags
 }
 
-resource "aws_cloudwatch_metric_alarm" "this" {
+resource "aws_cloudwatch_metric_alarm" "fail_alarm" {
   for_each = var.canaries_with_vpc
 
   alarm_name          = "${each.value.name}-fail-alarm"
@@ -128,13 +128,14 @@ resource "aws_cloudwatch_metric_alarm" "this" {
   alarm_actions     = [aws_sns_topic.this.arn]
   alarm_description = "Canary is down: ${each.value.name}"
   tags              = var.tags
+  depends_on        = [aws_sns_topic.this]
 }
 
-resource "aws_cloudwatch_metric_alarm" "this" {
+resource "aws_cloudwatch_metric_alarm" "success_alarm" {
   for_each = var.canaries_with_vpc
 
   alarm_name          = "${each.value.name}-success-alarm"
-  comparison_operator = "Lower"
+  comparison_operator = "LessThanThreshold"
   evaluation_periods  = "1"
   metric_name         = "SuccessPercent"
   namespace           = "CloudWatchSynthetics"
@@ -146,9 +147,10 @@ resource "aws_cloudwatch_metric_alarm" "this" {
   dimensions = {
     CanaryName = each.value.name
   }
-  ok_actions = [aws_sns_topic.this.arn]
+  ok_actions        = [aws_sns_topic.this.arn]
   alarm_description = "Canary is up: ${each.value.name}"
   tags              = var.tags
+  depends_on        = [aws_sns_topic.this]
 }
 ////////////////// s3 ////////////////////////
 

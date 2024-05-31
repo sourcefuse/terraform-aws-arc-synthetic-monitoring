@@ -73,12 +73,6 @@ variable "tags" {
 ## S3
 ################################################################################
 
-# variable "allow_encrypted_uploads_only" {
-#   type        = bool
-#   default     = false
-#   description = "Set to `true` to prevent uploads of unencrypted objects to S3 bucket"
-# }
-
 variable "bucket_name" {
   type        = string
   description = "The name of the S3 bucket."
@@ -88,16 +82,6 @@ variable "bucket_key_enabled" {
   description = "Specifies whether bucket key is enabled."
   default     = false
 }
-variable "allowed_bucket_actions" {
-  type        = list(string)
-  default     = ["s3:GetObject", "s3:PutObject"]
-  description = "List of actions allowed on the bucket, e.g., ['s3:GetObject', 's3:PutObject']."
-}
-# variable "acl" {
-#   type        = string
-#   default     = "private"
-#   description = "The ACL to apply to the bucket. Default is 'private'."
-# }
 variable "force_destroy" {
   type        = bool
   default     = true

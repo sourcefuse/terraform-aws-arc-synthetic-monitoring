@@ -108,10 +108,10 @@ resource "aws_synthetics_canary" "dynamic_canaries_with_vpc" {
   tags       = var.tags
 }
 
-resource "aws_cloudwatch_metric_alarm" "canary_in_vpc_alarms" {
+resource "aws_cloudwatch_metric_alarm" "fail_alarm" {
   for_each = var.canaries_with_vpc
 
-  alarm_name          = "${each.value.name}-alarm"
+  alarm_name          = "${each.value.name}-fail-alarm"
   comparison_operator = "GreaterThanOrEqualToThreshold"
   evaluation_periods  = "1"
   metric_name         = "Failed"
@@ -128,8 +128,30 @@ resource "aws_cloudwatch_metric_alarm" "canary_in_vpc_alarms" {
   alarm_actions     = [aws_sns_topic.this.arn]
   alarm_description = "Canary is down: ${each.value.name}"
   tags              = var.tags
+  depends_on        = [aws_sns_topic.this]
 }
 
+resource "aws_cloudwatch_metric_alarm" "success_alarm" {
+  for_each = var.canaries_with_vpc
+
+  alarm_name          = "${each.value.name}-success-alarm"
+  comparison_operator = "LessThanThreshold"
+  evaluation_periods  = "1"
+  metric_name         = "SuccessPercent"
+  namespace           = "CloudWatchSynthetics"
+  period              = "60"
+  statistic           = "Average"
+  threshold           = "90"
+  actions_enabled     = true
+
+  dimensions = {
+    CanaryName = each.value.name
+  }
+  ok_actions        = [aws_sns_topic.this.arn]
+  alarm_description = "Canary is up: ${each.value.name}"
+  tags              = var.tags
+  depends_on        = [aws_sns_topic.this]
+}
 ////////////////// s3 ////////////////////////
 
 resource "aws_s3_bucket" "artifcats_bucket" {

@@ -136,3 +136,8 @@ variable "sse_algorithm" {
   default     = "aws:kms"
   description = "The server-side encryption algorithm to use. Valid values are `AES256` and `aws:kms`"
 }
+variable "cloudwatch_metric_alarms_enabled" {
+  type        = bool
+  description = "Boolean flag to enable/disable CloudWatch metrics alarms"
+  default     = false
+}

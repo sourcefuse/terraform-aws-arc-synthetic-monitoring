@@ -132,8 +132,7 @@ resource "aws_cloudwatch_metric_alarm" "fail_alarm" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "success_alarm" {
-  for_each = var.canaries_with_vpc
-
+  for_each            = var.cloudwatch_metric_alarms_enabled ? var.canaries_with_vpc : {}
   alarm_name          = "${each.value.name}-success-alarm"
   comparison_operator = "LessThanThreshold"
   evaluation_periods  = "1"

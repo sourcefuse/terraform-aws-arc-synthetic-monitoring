@@ -14,7 +14,10 @@
       "profile": "http://mayankdevops.com",
       "contributions": [
         "code",
-        "doc"
+        "doc",
+        "infra",
+        "maintenance",
+        "mentoring"
       ]
     }
   ],

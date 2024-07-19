@@ -9,8 +9,9 @@ locals {
         failure_retention_period = "361"
         start_canary             = true
         success_retention_period = "361"
-        zip_file                 = data.archive_file.init.output_path
+        zip_file                 = canary.zip_file
         environment_variables    = canary.environment_variables
+        s3_details               = canary.s3_details
       }
     }
   ]...)
@@ -22,6 +23,16 @@ locals {
       environment_variables = {
         "URL" = "https://www.sourcefuse.com/"
       }
+      zip_file   = data.archive_file.init.output_path
+      s3_details = null
+    },
+    {
+      name = "another-canary"
+      environment_variables = {
+        "URL" = "https://www.anotherurl.com/"
+      }
+      zip_file   = data.archive_file.init.output_path
+      s3_details = null
     }
   ]
 }

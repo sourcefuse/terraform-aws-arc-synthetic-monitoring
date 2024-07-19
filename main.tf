@@ -84,7 +84,6 @@ resource "aws_synthetics_canary" "dynamic_canaries_with_vpc" {
   artifact_s3_location     = "s3://${aws_s3_bucket.artifcats_bucket.id}/"
   execution_role_arn       = data.aws_iam_role.execution_role.arn
   handler                  = each.value.handler
-  zip_file                 = each.value.zip_file
   runtime_version          = each.value.runtime_version
   start_canary             = each.value.start_canary
   failure_retention_period = each.value.failure_retention_period
@@ -103,6 +102,13 @@ resource "aws_synthetics_canary" "dynamic_canaries_with_vpc" {
     timeout_in_seconds    = 120
     environment_variables = each.value.environment_variables
   }
+
+  // Conditional attributes
+  zip_file   = each.value.zip_file != "" ? each.value.zip_file : null
+  s3_bucket  = each.value.zip_file == "" && each.value.s3_details != null ? each.value.s3_details.s3_bucket : null
+  s3_key     = each.value.zip_file == "" && each.value.s3_details != null ? each.value.s3_details.s3_key : null
+  s3_version = each.value.zip_file == "" && each.value.s3_details != null ? each.value.s3_details.s3_version : null
+
 
   depends_on = [aws_s3_bucket.artifcats_bucket]
   tags       = var.tags

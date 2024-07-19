@@ -48,9 +48,25 @@ variable "sns_topic_name" {
   description = "Name for the SNS topic."
   type        = string
 }
+
 variable "canaries_with_vpc" {
-  description = "A map of canaries configurations with VPC"
-  type        = map(any)
+  description = "List of canaries with VPC configuration"
+  type = map(object({
+    name                     = string
+    handler                  = string
+    zip_file                 = string
+    s3_details               = optional(object({
+      s3_bucket   = string
+      s3_key      = string
+      s3_version  = string
+    }), null)
+    runtime_version          = string
+    start_canary             = bool
+    failure_retention_period = number
+    success_retention_period = number
+    schedule_expression      = string
+    environment_variables    = map(string)
+  }))
 }
 
 variable "subnet_ids" {

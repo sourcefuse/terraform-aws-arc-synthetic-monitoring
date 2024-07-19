@@ -104,9 +104,9 @@ resource "aws_synthetics_canary" "dynamic_canaries_with_vpc" {
   }
 
   // Conditional attributes
-  zip_file = each.value.zip_file != "" ? each.value.zip_file : null
-  s3_bucket = each.value.zip_file == "" && each.value.s3_details != null ? each.value.s3_details.s3_bucket : null
-  s3_key = each.value.zip_file == "" && each.value.s3_details != null ? each.value.s3_details.s3_key : null
+  zip_file   = each.value.zip_file != "" ? each.value.zip_file : null
+  s3_bucket  = each.value.zip_file == "" && each.value.s3_details != null ? each.value.s3_details.s3_bucket : null
+  s3_key     = each.value.zip_file == "" && each.value.s3_details != null ? each.value.s3_details.s3_key : null
   s3_version = each.value.zip_file == "" && each.value.s3_details != null ? each.value.s3_details.s3_version : null
 
 

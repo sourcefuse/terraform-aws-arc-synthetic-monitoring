@@ -52,13 +52,13 @@ variable "sns_topic_name" {
 variable "canaries_with_vpc" {
   description = "List of canaries with VPC configuration"
   type = map(object({
-    name                     = string
-    handler                  = string
-    zip_file                 = string
-    s3_details               = optional(object({
-      s3_bucket   = string
-      s3_key      = string
-      s3_version  = string
+    name     = string
+    handler  = string
+    zip_file = string
+    s3_details = optional(object({
+      s3_bucket  = string
+      s3_key     = string
+      s3_version = string
     }), null)
     runtime_version          = string
     start_canary             = bool

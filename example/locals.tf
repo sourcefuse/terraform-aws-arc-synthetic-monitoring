@@ -23,7 +23,7 @@ locals {
       environment_variables = {
         "URL" = "https://www.sourcefuse.com/"
       }
-      zip_file = data.archive_file.init.output_path
+      zip_file   = data.archive_file.init.output_path
       s3_details = null
     },
     {
@@ -31,7 +31,7 @@ locals {
       environment_variables = {
         "URL" = "https://www.anotherurl.com/"
       }
-      zip_file = data.archive_file.init.output_path
+      zip_file   = data.archive_file.init.output_path
       s3_details = null
     }
   ]

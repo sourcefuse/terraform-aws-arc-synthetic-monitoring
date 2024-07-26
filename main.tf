@@ -78,7 +78,7 @@ resource "aws_sns_topic_subscription" "this" {
   endpoint  = var.endpoint
 }
 resource "aws_synthetics_canary" "dynamic_canaries_with_vpc" {
-  for_each = var.canaries_with_vpc
+  for_each = local.canaries_with_vpc
 
   name                     = each.value.name
   artifact_s3_location     = "s3://${aws_s3_bucket.artifcats_bucket.id}/"
@@ -103,12 +103,11 @@ resource "aws_synthetics_canary" "dynamic_canaries_with_vpc" {
     environment_variables = each.value.environment_variables
   }
 
-  // Conditional attributes
-  zip_file   = each.value.zip_file != "" ? each.value.zip_file : null
-  s3_bucket  = each.value.zip_file == "" && each.value.s3_details != null ? each.value.s3_details.s3_bucket : null
-  s3_key     = each.value.zip_file == "" && each.value.s3_details != null ? each.value.s3_details.s3_key : null
-  s3_version = each.value.zip_file == "" && each.value.s3_details != null ? each.value.s3_details.s3_version : null
-
+  # Conditional attributes
+  zip_file   = each.value.zip_file
+  s3_bucket  = each.value.s3_bucket
+  s3_key     = each.value.s3_key
+  s3_version = each.value.s3_version
 
   depends_on = [aws_s3_bucket.artifcats_bucket]
   tags       = var.tags

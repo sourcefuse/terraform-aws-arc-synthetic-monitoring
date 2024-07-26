@@ -20,16 +20,19 @@ locals {
   canaries = [
     {
       name = "sourcefuse-canary"
-      environment_variables = {
-        "URL" = "https://www.sourcefuse.com/"
+      environment_variables = {}
+      zip_file   = null
+      # s3_details = null
+      s3_details = {
+        s3_key = "mayank.zip"
+        s3_bucket = "gu-dev-canary-zip-storage"
+        s3_version =  null
       }
-      zip_file   = data.archive_file.init.output_path
-      s3_details = null
     },
     {
-      name = "another-canary"
+      name = "sourcefuse-canary-poc"
       environment_variables = {
-        "URL" = "https://www.anotherurl.com/"
+        "URL" = "https://www.sourcefuse.com/"
       }
       zip_file   = data.archive_file.init.output_path
       s3_details = null

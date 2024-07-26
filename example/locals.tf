@@ -19,14 +19,14 @@ locals {
 locals {
   canaries = [
     {
-      name = "sourcefuse-canary"
+      name                  = "sourcefuse-canary"
       environment_variables = {}
-      zip_file   = null
+      zip_file              = null
       # s3_details = null
       s3_details = {
-        s3_key = "mayank.zip"
-        s3_bucket = "gu-dev-canary-zip-storage"
-        s3_version =  null
+        s3_key     = "mayank.zip"
+        s3_bucket  = "gu-dev-canary-zip-storage"
+        s3_version = null
       }
     },
     {

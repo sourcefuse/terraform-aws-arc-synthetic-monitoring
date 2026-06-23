@@ -17,6 +17,9 @@
 
 [![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=sourcefuse_terraform-aws-arc-synthetic-monitoring&token=86c4365844146b19d7ee637439416373f834e97a)](https://sonarcloud.io/summary/new_code?id=sourcefuse_terraform-aws-arc-synthetic-monitoring)
 
+> [!TIP]
+> 🤖 **New:** Use this module with AI assistants via the [ARC IaC MCP Server](https://github.com/sourcefuse/arc-iac-mcp) — search, scaffold, and security-scan ARC modules from natural language. [Quick setup ↓](#ai-assistant-integration-arc-iac-mcp)
+
 ## Overview
 
 Creates CloudWatch Synthetics canaries for endpoint availability and performance monitoring with SNS alerting.
